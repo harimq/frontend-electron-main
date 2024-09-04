@@ -145,7 +145,7 @@ const Index = () => {
   //zoom value changes here
   const [stageScale, setStageScale] = useState(0.32);
   //moved image right till 90
-  //Indicate to gitrepo line 148
+  //Indicate to gitrepo line 148 for changes are added
   const [stageX, setStageX] = useState(90);
   const [stageY, setStageY] = useState(0);
 
