@@ -457,6 +457,7 @@ table tbody tr:not(:last-child) {
   border-bottom: 1px solid #e7e6f0;
 }
 
+/*row changes are size changed*/
 .consultation_table_body_row {
   height: 40px;
   border-bottom: 1px solid #eceff4;
@@ -557,6 +558,7 @@ thead {
   height: 56px;
   overflow: hidden;
 }
+
 
 .consultation_table_head_text .sort-sec {
   padding-right: 0%;
