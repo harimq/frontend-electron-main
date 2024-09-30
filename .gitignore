@@ -1,0 +1,4 @@
+node_modules/
+.next/
+out/
+glyphx-win32-x64/
