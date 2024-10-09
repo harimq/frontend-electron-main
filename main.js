@@ -23,14 +23,25 @@ function createWindow() {
   });
 }
 
+// app.on('ready', () => {
+//   const nodeBinaryPath = path.join(__dirname, 'node.exe'); 
+//   server = spawn(nodeBinaryPath, [path.join(__dirname, 'server1.js')]);
+//   server.stdout.on('data', (data) => {
+//     console.log(`server: ${data}`);
+//     if (!win) createWindow();
+//   });
+// });
+
+
 app.on('ready', () => {
-  const nodeBinaryPath = path.join(__dirname, 'node.exe'); 
-  server = spawn(nodeBinaryPath, [path.join(__dirname, 'server1.js')]);
+  server = spawn('node', [path.join(__dirname, 'server1.js')]);
   server.stdout.on('data', (data) => {
     console.log(`server: ${data}`);
     if (!win) createWindow();
   });
 });
+
+
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

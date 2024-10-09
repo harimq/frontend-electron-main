@@ -99,7 +99,7 @@ const Raised_Ticket_Details = ({ open = false, handleClose, rowData  }: Props) =
                       <Typography variant="subtitle2">Ticket Id</Typography>
                       <Typography variant="body2">{rowData ? rowData?.ticket_id : ""}</Typography>
                     </Box>
-                    <Box className="col-span-3">
+                    <Box className="col-span-9">
                       <Typography variant="subtitle2">Summary</Typography>
                       <Typography variant="body2" className="break-words">{rowData ? rowData?.summary : ""}</Typography>
                     </Box>

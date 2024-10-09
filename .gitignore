@@ -2,3 +2,4 @@ node_modules/
 .next/
 out/
 glyphx-win32-x64/
+glyphx-linux-x64
