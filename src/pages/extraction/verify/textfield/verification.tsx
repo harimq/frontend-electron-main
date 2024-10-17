@@ -954,7 +954,7 @@ const Verification = () => {
   //   }
   // }, [activeIndex]);
 
-  const [stageScale, setStageScale] = useState(0.53);
+  const [stageScale, setStageScale] = useState(0.40);
   const [stageX, setStageX] = useState(0);
   const [stageY, setStageY] = useState(0);
   const handleZoomIn = () => {
@@ -980,7 +980,7 @@ const Verification = () => {
   };
 
   const handleReset = () => {
-    setStageScale(0.53);
+    setStageScale(0.40);
     setStageX(0);
     setStageY(0);
   };

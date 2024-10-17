@@ -465,7 +465,9 @@ const URLImage: React.FC<{ src: string; x: number; y: number }> = (props) => {
     }
   };
 
+  // 1st useEffect: Load the image when the source changes
   useEffect(() => {
+    console.log("1st useEffect is running"); // Tracking execution
     loadImage(props);
   }, [props.src]);
 
@@ -587,24 +589,25 @@ const CanvasComponent: React.FC<any> = ({
     return { width: width, height: height };
   }
 
+  // 2nd useEffect: Adjust the stage X position based on window size and container width
   useEffect(() => {
+    console.log("2nd useEffect is running"); // Tracking execution
     let { width, height } = getWindowSize();
-    // console.log(width);
     if (width < 1500) {
       setStageX(0);
     } else {
       if (containerRef?.current) {
-        const containerWidth: number = containerRef.current.offsetWidth;
+        const containerWidth = containerRef.current.offsetWidth;
         const centerX = (dimensions.x || 0) + (dimensions.width || 0) / 2;
-
-        const newStageX: number =
-          containerWidth / 4 - centerX * stageScale - 50;
+        const newStageX = containerWidth / 4 - centerX * stageScale - 50;
         setStageX(newStageX);
       }
     }
-  }, []);
+}, []);
 
+  // 3rd useEffect: Update stage width and height when the window is resized
   useEffect(() => {
+    console.log("3rd useEffect is running"); // Tracking execution
     const handleResize = () => {
       setStageWidth(
         containerRef.current?.offsetWidth ||
@@ -620,7 +623,7 @@ const CanvasComponent: React.FC<any> = ({
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+}, []);
 
   const [difference, setDifference] = useState({
     x: 0,
@@ -652,38 +655,34 @@ const CanvasComponent: React.FC<any> = ({
     if (containerRef.current) {
       const containerWidth: number = containerRef.current.offsetWidth;
       const containerHeight: number = containerRef.current.offsetHeight;
-
+  
+      // Calculate the center coordinates of the highlighted area
       const centerX = (dimensions.x || 0) + (dimensions.width || 0) / 2;
       const centerY = (dimensions.y || 0) + (dimensions.height || 0) / 2;
-
-      const newStageX: number = containerWidth / 4 - centerX * stageScale + 200;
-      const newStageY: number =
-        containerHeight / 2 - centerY * stageScale - 200;
-
-      // console.log(fieldLength);
-      // if (fieldLength > 1) {
+  
+      // Calculate new stage X and Y to center the image
+      const newStageX: number = containerWidth / 2 - centerX * stageScale;  // Adjusted to use center of container
+      const newStageY: number = containerHeight / 2 - centerY * stageScale // Adjusted to use center of container
+  
+      // Remove or update this logic if centering is preferred
       setDifference({
         x: newStageX - stageX,
         y: newStageY - stageY,
       });
-      // } else {
-      //   setDifference({
-      //     x: 0,
-      //     y: 0,
-      //   });
-      // }
-
+  
+      // Update stageX and stageY to center the image
       if (lineShow) {
         setStageX(newStageX);
-        setDragMove(0);
+        setDragMove(0);  // Reset drag movement if necessary
       }
-      setStageY(newStageY);
+      setStageY(newStageY);  // Center the stage vertically
     }
   };
 
+  // 4th useEffect: Adjust view to the highlighted area when coordinates change
   useEffect(() => {
+    console.log("4th useEffect is running"); // Tracking execution
     if (highlightedX && highlightedY && fieldLength > 1) {
-      // if (highlightedX && highlightedY) {
       adjustViewToHighlightedArea();
       window.addEventListener("resize", adjustViewToHighlightedArea);
       return () => {
@@ -701,18 +700,23 @@ const CanvasComponent: React.FC<any> = ({
     lineShow,
   ]);
 
+
+// 5th useEffect: Reset the difference when image URLs change
   useEffect(() => {
+    console.log("5th useEffect is running"); // Tracking execution
     setDifference({
       x: 0,
       y: 0,
     });
   }, [imageUrls]);
 
+
+  // 6th useEffect: Update the rectangle position whenever the dimensions or other dependencies change
   useEffect(() => {
+    console.log("6th useEffect is running"); // Tracking execution
     const rectNode = rectRef.current;
 
     if (rectNode) {
-      // setTimeout(() => {
       const rectAbsolutePosition = rectNode.getAbsolutePosition();
       const rectPosition = {
         x: rectAbsolutePosition.x,
@@ -721,20 +725,18 @@ const CanvasComponent: React.FC<any> = ({
         height: rectNode.height(),
       };
       setRectPosition(rectPosition);
-      // }, 200);
     }
-    // }, [dimensions, inputCoordinates, fieldLength, imageUrls]);
   }, [dimensions, inputCoordinates, lineShow]);
 
+  // 7th useEffect: Calculate line points based on the rectangle and input coordinates
   useEffect(() => {
+    console.log("7th useEffect is running"); // Tracking execution
     const calculateLinePoints = () => {
       const rectCenterX = rectPosition.x + dimensions.width / 2;
       const rectCenterY = rectPosition.y + dimensions.height / 2;
-      // const canvasX = dimensions.x + dimensions.width / 2;
-      // const canvasY = dimensions.y + dimensions.height / 2;
       let { height } = getWindowSize();
 
-      const lineX = inputCoordinates?.x - 60; //+ window.innerWidth / 2 - 600;
+      const lineX = inputCoordinates?.x - 60;
       const lineY = inputCoordinates?.y - getValueForHeight(height) + 10;
       setLinePoints([
         rectCenterX + difference.x + 10,
@@ -742,15 +744,8 @@ const CanvasComponent: React.FC<any> = ({
         lineX,
         lineY,
       ]);
-
-      // To set left points to start from reactangle end
-      // setLinePoints([
-      //   rectCenterX + rectPosition.width / 20 + 22,
-      //   rectCenterY + difference.y + 10,
-      //   lineX,
-      //   lineY,
-      // ]);
     };
+
     calculateLinePoints();
   }, [
     dimensions,
@@ -761,7 +756,10 @@ const CanvasComponent: React.FC<any> = ({
     draggableMove,
   ]);
 
+
+  // 8th useEffect: Update the temporary width when the highlighted text changes
   useEffect(() => {
+    console.log("8th useEffect is running"); // Tracking execution
     if (highlightTextRef.current) {
       setTempWidth(highlightTextRef.current?.textWidth);
     }
