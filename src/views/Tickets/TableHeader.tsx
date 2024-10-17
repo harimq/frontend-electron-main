@@ -51,6 +51,7 @@ interface TYPE {
     const dispatch = useDispatch<AppDispatch>();
 
     //Delete dicket functionality added ln54 and ln118
+    //New delete functionality addded
     const onDeleteTicket = async () => {
       let updatedDeletedData =
         selectedData?.tableSelectedData &&
@@ -70,6 +71,7 @@ interface TYPE {
     };
     
     //setStatus line updated by iterating and gerating id's via mapp ln72s
+    //new expire one
     const onExpireTicket = () => {
       let updateExpireData = selectedData?.tableSelectedData?.map((item) => {
         return item?.original?.ticket_id;

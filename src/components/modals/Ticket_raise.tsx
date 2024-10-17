@@ -161,23 +161,29 @@ const Ticket_raise = ({ open = false, handleClose }) => {
                   </FormHelperText>
                 </FormControl>
               </Grid>
+              {/*Text field changed to Text Area*/}
               <Grid item xs={12} sm={6}>
-                <FormControl className="flex flex-col  gap-9 w-full">
-                  <TextField
-                    label="Summary"
-                    name="summary"
-                    variant="outlined"
-                    value={formik.values?.summary}
-                    onChange={formik.handleChange}
-                    helperText={
-                      formik.errors?.summary &&
-                      formik.touched.summary &&
-                      formik.errors?.summary
-                    }
-                    onBlur={formik.handleBlur}
-                  />
-                </FormControl>
-              </Grid>
+              <FormControl className="flex flex-col gap-9 w-full">
+                <label htmlFor="summary" className="mb-2">
+                  Summary
+              </label>
+              <textarea
+                id="summary"
+                name="summary"
+                className="border border-solid border-[#E7E6F0] rounded-2xl px-4 py-2 w-full"
+                rows={8} 
+                value={formik.values?.summary}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                style={{ minHeight: "150px" }}
+              />
+              {formik.errors?.summary && formik.touched.summary && (
+                <Typography variant="body2" color="error">
+                  {formik.errors.summary}
+                </Typography>
+              )}
+            </FormControl>
+            </Grid>
             </Grid>
             <Box className="flex lg:flex-row flex-col justify-end gap-4">
               <Button
