@@ -429,7 +429,7 @@
 // export default CanvasComponent;
 
 import React, { useState, useRef, useEffect } from "react";
-import { Stage, Layer, Image, Rect, Line, Circle, Text } from "react-konva";
+import { Stage, Layer, Image, Rect, Line, Circle, Text , Arrow   } from "react-konva";
 import whitebg from "../../assets/images/whitebg.png";
 
 type Dimensions = {
@@ -440,7 +440,7 @@ type Dimensions = {
 };
 
 type CanvasComponentProps = {
-  imageUrls?: any;
+  imageUrls?: any;  
   dimensions: Dimensions;
   setStageScale: (scale: number) => void;
   setStageX: (x: any) => void;
@@ -729,18 +729,22 @@ const CanvasComponent: React.FC<any> = ({
   }, [dimensions, inputCoordinates, lineShow]);
 
   // 7th useEffect: Calculate line points based on the rectangle and input coordinates
+  //use it for line behaviour
   useEffect(() => {
     console.log("7th useEffect is running"); // Tracking execution
+    console.log(linePoints)
     const calculateLinePoints = () => {
       const rectCenterX = rectPosition.x + dimensions.width / 2;
       const rectCenterY = rectPosition.y + dimensions.height / 2;
       let { height } = getWindowSize();
-
-      const lineX = inputCoordinates?.x - 60;
+      
+      //calculates the line from box
+      const lineX = inputCoordinates?.x - 65;
       const lineY = inputCoordinates?.y - getValueForHeight(height) + 10;
+      console.log(inputCoordinates)
       setLinePoints([
-        rectCenterX + difference.x + 10,
-        rectCenterY + difference.y + 10,
+        rectCenterX + difference.x + 15,
+        rectCenterY + difference.y + 12,
         lineX,
         lineY,
       ]);
@@ -872,7 +876,14 @@ const CanvasComponent: React.FC<any> = ({
               radius={6}
               fill="green"
             /> */}
-            <Line points={linePoints} stroke="black" strokeWidth={2} />
+            <Arrow
+            points={linePoints} // Points to calculate start (from list layout) and end (to highlighted area)
+            pointerLength={10} // Length of the arrowhead
+            pointerWidth={10} // Width of the arrowhead
+            fill="black" // Color of the arrowhead
+            stroke="black" // Color of the arrow line
+            strokeWidth={2} // Width of the arrow line
+          />
           </Layer>
         </Stage>
       )}
