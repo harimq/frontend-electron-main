@@ -431,6 +431,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Stage, Layer, Image, Rect, Line, Circle, Text } from "react-konva";
 import whitebg from "../../assets/images/whitebg.png";
+import { SaveDimensions } from "@styled-icons/material/Save";
 
 type Dimensions = {
   x?: number;
@@ -645,8 +646,7 @@ const CanvasComponent: React.FC<any> = ({
       return 0;
     }
   }
-
-  // const [value, setValue] = useState(1);
+sessionStorage
 
   const adjustViewToHighlightedArea = () => {
     if (containerRef.current) {
@@ -700,6 +700,8 @@ const CanvasComponent: React.FC<any> = ({
     inputCoordinates,
     lineShow,
   ]);
+  //changes
+
 
   useEffect(() => {
     setDifference({
