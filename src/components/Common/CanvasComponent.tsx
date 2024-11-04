@@ -736,9 +736,10 @@ const CanvasComponent: React.FC<any> = ({
 
       const lineX = inputCoordinates?.x - 60; //+ window.innerWidth / 2 - 600;
       const lineY = inputCoordinates?.y - getValueForHeight(height) + 10;
+      //changes to lines calculation adjusted the accuracy
       setLinePoints([
-        rectCenterX + difference.x + 10,
-        rectCenterY + difference.y + 10,
+        rectCenterX + difference.x + 23,
+        rectCenterY + difference.y + 13,
         lineX,
         lineY,
       ]);
