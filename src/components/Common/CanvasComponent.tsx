@@ -429,7 +429,7 @@
 // export default CanvasComponent;
 
 import React, { useState, useRef, useEffect } from "react";
-import { Stage, Layer, Image, Rect, Line, Circle, Text , Arrow   } from "react-konva";
+import { Stage, Layer, Image, Rect, Line, Circle, Text } from "react-konva";
 import whitebg from "../../assets/images/whitebg.png";
 
 type Dimensions = {
@@ -731,25 +731,31 @@ const CanvasComponent: React.FC<any> = ({
   // 7th useEffect: Calculate line points based on the rectangle and input coordinates
   //use it for line behaviour
   useEffect(() => {
-    console.log("7th useEffect is running"); // Tracking execution
-    console.log(linePoints)
     const calculateLinePoints = () => {
       const rectCenterX = rectPosition.x + dimensions.width / 2;
       const rectCenterY = rectPosition.y + dimensions.height / 2;
+      // const canvasX = dimensions.x + dimensions.width / 2;
+      // const canvasY = dimensions.y + dimensions.height / 2;
       let { height } = getWindowSize();
-      
-      //calculates the line from box
-      const lineX = inputCoordinates?.x - 65;
+
+      const lineX = inputCoordinates?.x - 60; //+ window.innerWidth / 2 - 600;
       const lineY = inputCoordinates?.y - getValueForHeight(height) + 10;
-      console.log(inputCoordinates)
+      //changes to lines calculation adjusted the accuracy
       setLinePoints([
         rectCenterX + difference.x + 15,
-        rectCenterY + difference.y + 12,
+        rectCenterY + difference.y + 16,
         lineX,
         lineY,
       ]);
-    };
 
+      // To set left points to start from reactangle end
+      // setLinePoints([
+      //   rectCenterX + rectPosition.width / 20 + 22,
+      //   rectCenterY + difference.y + 10,
+      //   lineX,
+      //   lineY,
+      // ]);
+    };
     calculateLinePoints();
   }, [
     dimensions,
@@ -760,10 +766,7 @@ const CanvasComponent: React.FC<any> = ({
     draggableMove,
   ]);
 
-
-  // 8th useEffect: Update the temporary width when the highlighted text changes
   useEffect(() => {
-    console.log("8th useEffect is running"); // Tracking execution
     if (highlightTextRef.current) {
       setTempWidth(highlightTextRef.current?.textWidth);
     }
@@ -876,14 +879,7 @@ const CanvasComponent: React.FC<any> = ({
               radius={6}
               fill="green"
             /> */}
-            <Arrow
-            points={linePoints} // Points to calculate start (from list layout) and end (to highlighted area)
-            pointerLength={10} // Length of the arrowhead
-            pointerWidth={10} // Width of the arrowhead
-            fill="black" // Color of the arrowhead
-            stroke="black" // Color of the arrow line
-            strokeWidth={2} // Width of the arrow line
-          />
+            <Line points={linePoints} stroke="black" strokeWidth={2} />
           </Layer>
         </Stage>
       )}

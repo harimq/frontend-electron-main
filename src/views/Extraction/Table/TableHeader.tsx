@@ -30,10 +30,17 @@ interface TYPE {
   tableHeader?: TableColumn[];
 }
 
+interface TYPE {
+  onDeleteCases?: () => void; // Add this
+  onExpiresVerifications?: () => void; // Add this
+
+}
+
 export default function TableHeader({
   isAddButton,
   data,
-
+  onDeleteCases,
+  onExpiresVerifications,
   tableHeader,
 }: TYPE) {
   const { selectedData, setSelectedData }: any = useContext(SimpleCtx);
@@ -41,6 +48,9 @@ export default function TableHeader({
   const dispatch = useDispatch<AppDispatch>();
 
   const onDeleteCase = () => {
+    if(onDeleteCases){
+      onDeleteCases();
+    }
     selectedData?.tableSelectedData &&
       selectedData?.tableSelectedData?.map((item) => {
         dispatch(
@@ -53,6 +63,9 @@ export default function TableHeader({
       });
   };
   const onExpiresVerification = () => {
+    if(onExpiresVerifications){
+      onExpiresVerifications()
+    }
     let updateBatchId =
       selectedData?.tableSelectedData &&
       selectedData?.tableSelectedData?.map((item) => {

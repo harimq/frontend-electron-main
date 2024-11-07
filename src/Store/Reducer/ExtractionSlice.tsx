@@ -218,6 +218,7 @@ export const DeleteExtractionBatch = createAsyncThunk(
       dispatch(setLoading(true));
       const result = await DeleteExtractionBatchAPI(values);
       if (result) {
+        dispatch(GetClassificationBatches());
         dispatch(setLoading(false));
         return result;
       } else {

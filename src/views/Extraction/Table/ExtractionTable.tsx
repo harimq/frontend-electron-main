@@ -15,7 +15,16 @@ const Table = dynamic(() => import("@/components/tables/Table"), {
   ssr: false,
 });
 
-const ExtractionTable = () => {
+// Add interface here
+interface ExtractionTableProps {
+  onDeleteCases?: () => void;
+  onExpiresVerifications?: () => void; 
+}
+
+const ExtractionTable: React.FC<ExtractionTableProps> = ({
+  onDeleteCases, // Receive the function
+  onExpiresVerifications, // Receive the function
+}) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const { extractionBatchList } = useSelector(
@@ -98,6 +107,7 @@ const ExtractionTable = () => {
       dispatch(Verification(`?${combinedParams}`));
     }
   }, [searchParams]);
+
   return (
     <div className="extraction">
       <CountCard data={data} lgGrid={0} />
@@ -106,9 +116,12 @@ const ExtractionTable = () => {
           Verification List
         </Typography>
         <CtxProvider>
+          {/* Pass the functions to TableHeader */}
           <TableHeader
             data={extractionBatchList && extractionBatchList?.items}
             tableHeader={columns}
+            onDeleteCases={onDeleteCases} // Pass as prop
+            onExpiresVerifications={onExpiresVerifications} // Pass as prop
           />
           {extractionBatchList?.items && (
             <Table
